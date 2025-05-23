@@ -22,9 +22,18 @@ L'architecture AWS comprend les composants suivants :
 2. Créez 6 sous-réseaux :
    - 2 sous-réseaux publics (un dans chaque zone de disponibilité).
    - 6 sous-réseaux privés (3 pour le frontend/backend/RDS(database) dans chaque zone).
+![image](https://github.com/user-attachments/assets/935ba238-bc58-4876-a525-ab7bf2c86125)
+
 3. Attachez une Internet Gateway (IGW) au VPC.
+![image](https://github.com/user-attachments/assets/0bed00db-4a6c-4a0f-a017-0b12e1f5e02c)
+
 4. Déployez 2 NAT Gateways (un par AZ) dans les sous-réseaux publics.
+![image](https://github.com/user-attachments/assets/dfbfb7a5-0ae4-4db8-ae29-8a6a77ea868d)
+
 5. Configurez les tables de routage pour les sous-réseaux publics et privés.
+![image](https://github.com/user-attachments/assets/50089191-4b41-4963-9233-22becdfd19b8)
+
+6. Architecture Globlale du Vpc 
 ![image](https://github.com/user-attachments/assets/0d348fc6-6493-4c71-8a69-31917fa9b1eb)
 
 
