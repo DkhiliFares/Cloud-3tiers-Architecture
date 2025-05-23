@@ -35,6 +35,64 @@ L'architecture AWS comprend les composants suivants :
 - **SG-DB** : Autorise le trafic depuis SG-BE (ex: port 3306).
 - **SG-Bastion** : Autorise l'accès SSH depuis une IP fixe.
 
+#### 1. 🔁 **SG-LB** (Load Balancer ou accès frontend direct)
+
+* **Nom** : `SG-LB`
+* **Utilisation** : Autoriser le trafic HTTP/HTTPS public vers le frontend
+
+| Type  | Protocole | Port | Source      |
+| ----- | --------- | ---- | ----------- |
+| HTTP  | TCP       | 80   | `0.0.0.0/0` |
+| HTTPS | TCP       | 443  | `0.0.0.0/0` |
+
+---
+
+#### 2. 🎨 **SG-FE** (Frontend)
+
+* **Nom** : `SG-FE`
+* **Utilisation** : Autoriser uniquement le trafic du SG-LB
+
+| Type  | Protocole | Port | Source                       |
+| ----- | --------- | ---- | ---------------------------- |
+| HTTP  | TCP       | 80   | `SG-LB` (sélectionner le SG) |
+| HTTPS | TCP       | 443  | `SG-LB`                      |
+
+---
+
+#### 3. ⚙️ **SG-BE** (Backend)
+
+* **Nom** : `SG-BE`
+* **Utilisation** : Autoriser le frontend à appeler les APIs backend (ex: port 8080)
+
+| Type          | Protocole | Port | Source  |
+| ------------- | --------- | ---- | ------- |
+| HTTP (custom) | TCP       | 8080 | `SG-FE` |
+
+---
+
+#### 4. 🗃️ **SG-DB** (Base de données)
+
+* **Nom** : `SG-DB`
+* **Utilisation** : Autoriser uniquement le backend à accéder à la base (port 3306)
+
+| Type         | Protocole | Port | Source  |
+| ------------ | --------- | ---- | ------- |
+| MySQL/Aurora | TCP       | 3306 | `SG-BE` |
+
+---
+
+#### 5. 💻 **SG-Bastion** (accès SSH)
+
+* **Nom** : `SG-Bastion`
+* **Utilisation** : Te connecter en SSH depuis ton PC
+
+| Type | Protocole | Port | Source                                      |
+| ---- | --------- | ---- | ------------------------------------------- |
+| SSH  | TCP       | 22   | `Ton IP publique` (ex: `41.226.xxx.xxx/32`) |
+
+---
+
+
 ### Étape 3 : Déploiement des Ressources EC2
 1. Déployez deux instances EC2 pour le frontend (une par AZ) dans les sous-réseaux privés.
 2. Déployez deux instances EC2 pour le backend (une par AZ) dans les sous-réseaux privés.
