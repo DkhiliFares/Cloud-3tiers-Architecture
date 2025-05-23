@@ -21,10 +21,12 @@ L'architecture AWS comprend les composants suivants :
 1. Créez un VPC avec une plage CIDR (ex: `10.0.0.0/16`).
 2. Créez 6 sous-réseaux :
    - 2 sous-réseaux publics (un dans chaque zone de disponibilité).
-   - 4 sous-réseaux privés (2 pour le frontend/backend dans chaque zone).
+   - 6 sous-réseaux privés (3 pour le frontend/backend/RDS(database) dans chaque zone).
 3. Attachez une Internet Gateway (IGW) au VPC.
 4. Déployez 2 NAT Gateways (un par AZ) dans les sous-réseaux publics.
 5. Configurez les tables de routage pour les sous-réseaux publics et privés.
+![image](https://github.com/user-attachments/assets/0d348fc6-6493-4c71-8a69-31917fa9b1eb)
+
 
 ### Étape 2 : Configuration des Groupes de Sécurité
 - **SG-LB** : Autorise HTTP/HTTPS depuis Internet.
