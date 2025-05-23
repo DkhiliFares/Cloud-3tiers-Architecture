@@ -118,10 +118,19 @@ L'architecture AWS comprend les composants suivants :
 
 ### Étape 3 : Déploiement des Ressources EC2
 1. Déployez deux instances EC2 pour le frontend (une par AZ) dans les sous-réseaux privés.
-2. Déployez deux instances EC2 pour le backend (une par AZ) dans les sous-réseaux privés.
-3. Déployez une instance Bastion dans un sous-réseau public.
-4. Configurez un Application Load Balancer (ALB) pour le frontend et le backend.
-5. Configurez des groupes Auto Scaling pour le frontend et le backend avec des règles basées sur l'utilisation CPU ou le nombre de requêtes.
+*Frontend EC2-A*
+![image](https://github.com/user-attachments/assets/816262d3-5cfa-4afb-85be-31a16f191b1c)
+
+*Fronted EC2-B*
+![image](https://github.com/user-attachments/assets/73319a8b-2d7e-46d2-bfaa-7539a2f5b04b)
+
+3. Déployez deux instances EC2 pour le backend (une par AZ) dans les sous-réseaux privés.
+   
+5. Déployez une instance Bastion dans un sous-réseau public(publicSubnetB).
+![image](https://github.com/user-attachments/assets/15eea3dc-a430-461e-8fdf-a6af838c41a8)
+
+6. Configurez un Application Load Balancer (ALB) pour le frontend et le backend.
+7. Configurez des groupes Auto Scaling pour le frontend et le backend avec des règles basées sur l'utilisation CPU ou le nombre de requêtes.
 
 ### Étape 4 : Déploiement de la Base de Données (Amazon RDS)
 1. Créez une instance RDS (MySQL ou PostgreSQL) dans les sous-réseaux privés.
