@@ -121,6 +121,10 @@ L'architecture AWS comprend les composants suivants :
 *Frontend EC2-A*
 ![image](https://github.com/user-attachments/assets/816262d3-5cfa-4afb-85be-31a16f191b1c)
 
+Accés à l'instance EC2-Fronted-A depuis bastionHost en utilisant le key AccesSSHBastionHost.pem 
+![Capture d'écran 2025-05-23 220207](https://github.com/user-attachments/assets/99ee1388-aee4-4b8f-8d46-7b50e05341b3)
+
+
 *Fronted EC2-B*
 ![image](https://github.com/user-attachments/assets/73319a8b-2d7e-46d2-bfaa-7539a2f5b04b)
 
@@ -129,8 +133,11 @@ L'architecture AWS comprend les composants suivants :
 5. Déployez une instance Bastion dans un sous-réseau public(publicSubnetB).
 ![image](https://github.com/user-attachments/assets/15eea3dc-a430-461e-8fdf-a6af838c41a8)
 
-6. Configurez un Application Load Balancer (ALB) pour le frontend et le backend.
-7. Configurez des groupes Auto Scaling pour le frontend et le backend avec des règles basées sur l'utilisation CPU ou le nombre de requêtes.
+Accés au bastion host depuis mon pc local en utilisant le key AccesSSHBastionHost.pem 
+![image](https://github.com/user-attachments/assets/a62e2dc7-b5cf-41c5-8c9e-82c24d8730dc)
+
+7. Configurez un Application Load Balancer (ALB) pour le frontend et le backend.
+8. Configurez des groupes Auto Scaling pour le frontend et le backend avec des règles basées sur l'utilisation CPU ou le nombre de requêtes.
 
 ### Étape 4 : Déploiement de la Base de Données (Amazon RDS)
 1. Créez une instance RDS (MySQL ou PostgreSQL) dans les sous-réseaux privés.
