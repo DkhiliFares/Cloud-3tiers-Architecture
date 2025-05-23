@@ -47,6 +47,8 @@ L'architecture AWS comprend les composants suivants :
 | ----- | --------- | ---- | ----------- |
 | HTTP  | TCP       | 80   | `0.0.0.0/0` |
 | HTTPS | TCP       | 443  | `0.0.0.0/0` |
+
+---
 ![image](https://github.com/user-attachments/assets/d227c9e5-9b03-4cfd-b342-b67db7f8779f)
 
 ---
@@ -60,6 +62,8 @@ L'architecture AWS comprend les composants suivants :
 | ----- | --------- | ---- | ---------------------------- |
 | HTTP  | TCP       | 80   | `SG-LB` (sélectionner le SG) |
 | HTTPS | TCP       | 443  | `SG-LB`                      |
+
+---
 ![image](https://github.com/user-attachments/assets/726eafd9-e8c6-4930-9ff7-8d8ff628c9f9)
 
 ---
@@ -72,9 +76,10 @@ L'architecture AWS comprend les composants suivants :
 | Type          | Protocole | Port | Source  |
 | ------------- | --------- | ---- | ------- |
 | HTTP (custom) | TCP       | 8080 | `SG-FE` |
-![image](https://github.com/user-attachments/assets/ee197618-c332-4fc2-b960-a588eedd2835)
+
 
 ---
+![image](https://github.com/user-attachments/assets/ee197618-c332-4fc2-b960-a588eedd2835)
 
 #### 4. 🗃️ **SG-DB** (Base de données)
 
@@ -84,9 +89,10 @@ L'architecture AWS comprend les composants suivants :
 | Type         | Protocole | Port | Source  |
 | ------------ | --------- | ---- | ------- |
 | MySQL/Aurora | TCP       | 3306 | `SG-BE` |
-![image](https://github.com/user-attachments/assets/691b89c9-b639-40f0-b780-c22c0e03c4d1)
 
 ---
+![image](https://github.com/user-attachments/assets/691b89c9-b639-40f0-b780-c22c0e03c4d1)
+
 
 #### 5. 💻 **SG-Bastion** (accès SSH)
 
@@ -96,9 +102,9 @@ L'architecture AWS comprend les composants suivants :
 | Type | Protocole | Port | Source                                      |
 | ---- | --------- | ---- | ------------------------------------------- |
 | SSH  | TCP       | 22   | `Ton IP publique` (ex: `41.226.xxx.xxx/32`) |
-![image](https://github.com/user-attachments/assets/e8ab8fb8-eafa-490f-9a93-6eb20e0227f3)
 
 ---
+![image](https://github.com/user-attachments/assets/e8ab8fb8-eafa-490f-9a93-6eb20e0227f3)
 
 
 ### Étape 3 : Déploiement des Ressources EC2
