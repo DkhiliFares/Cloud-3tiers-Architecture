@@ -1,4 +1,4 @@
-# README - Projet d’Évaluation AWS : Déploiement d’une Application 3 Niveaux
+# Projet d’Évaluation AWS : Déploiement d’une Application 3 Niveaux
 
 ## Description du Projet
 Ce projet consiste à déployer une application web moderne avec une architecture cloud sécurisée et scalable sur AWS. L'application est composée de trois niveaux :
