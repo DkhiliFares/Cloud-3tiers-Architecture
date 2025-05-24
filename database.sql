@@ -1,6 +1,3 @@
--- Script SQL pour la base de données e-commerce ModaStyle
--- Version mise à jour avec la table contact_message et optimisée pour Flask
-
 -- Suppression de la base de données si elle existe déjà
 DROP DATABASE IF EXISTS mydb;
 
@@ -9,6 +6,18 @@ CREATE DATABASE mydb CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- Utilisation de la base de données
 USE mydb;
+
+-- Table des logs d'activité (pour les triggers)
+CREATE TABLE activity_log (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    action VARCHAR(50),
+    entity_type VARCHAR(50),
+    entity_id INT,
+    details TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_activity_user (user_id)
+) ENGINE=InnoDB;
 
 -- Table des utilisateurs
 CREATE TABLE user (
@@ -130,7 +139,6 @@ CREATE TABLE wishlist (
 
 -- Insertion de données de démonstration
 
--- Utilisateurs (mot de passe: 'password' hashé avec pbkdf2:sha256 pour compatibilité Flask)
 INSERT INTO user (firstname, lastname, email, password, is_admin, created_at) VALUES
 ('Admin', 'System', 'admin@modastyle.com', 'pbkdf2:sha256:260000$N2x9Q7hG$3f4870e2c3b7e5c8e8e7e3e1e4e3e7e3e1e4e3e7e3e1e4e3e7e3e1e4e3e7e3', TRUE, '2025-01-01 00:00:00'),
 ('Marie', 'Dupont', 'marie.dupont@example.com', 'pbkdf2:sha256:260000$N2x9Q7hG$3f4870e2c3b7e5c8e8e7e3e1e4e3e7e3e1e4e3e7e3e1e4e3e7e3e1e4e3e7e3', FALSE, '2025-02-15 10:30:00'),
@@ -138,7 +146,6 @@ INSERT INTO user (firstname, lastname, email, password, is_admin, created_at) VA
 ('Sophie', 'Petit', 'sophie.petit@example.com', 'pbkdf2:sha256:260000$N2x9Q7hG$3f4870e2c3b7e5c8e8e7e3e1e4e3e7e3e1e4e3e7e3e1e4e3e7e3e1e4e3e7e3', FALSE, '2025-02-10 09:15:00'),
 ('Pierre', 'Durand', 'pierre.durand@example.com', 'pbkdf2:sha256:260000$N2x9Q7hG$3f4870e2c3b7e5c8e8e7e3e1e4e3e7e3e1e4e3e7e3e1e4e3e7e3e1e4e3e7e3', FALSE, '2025-01-05 16:20:00');
 
--- Catégories
 INSERT INTO category (name, description, parent_id) VALUES
 ('Hommes', 'Vêtements pour hommes', NULL),
 ('Femmes', 'Vêtements pour femmes', NULL),
@@ -149,7 +156,6 @@ INSERT INTO category (name, description, parent_id) VALUES
 ('Vestes', 'Vestes et manteaux', 2),
 ('Ensembles', 'Ensembles pour enfants', 3);
 
--- Produits
 INSERT INTO product (name, description, price, old_price, category, image_url, badge, stock, created_at) VALUES
 ('T-shirt Premium Coton', 'T-shirt en coton premium, coupe régulière et confortable.', 29.99, 39.99, 'Hommes', 'images/product-1.jpg', 'Nouveau', 45, '2025-04-01 08:00:00'),
 ('Robe d\'Été Fleurie', 'Robe légère à motifs floraux, parfaite pour l\'été.', 49.99, 69.99, 'Femmes', 'images/product-2.jpg', '-30%', 8, '2025-04-02 09:30:00'),
@@ -160,21 +166,18 @@ INSERT INTO product (name, description, price, old_price, category, image_url, b
 ('Ensemble Sport Enfant', 'Ensemble sport confortable et résistant pour enfants actifs.', 39.99, 49.99, 'Enfants', 'images/product-7.jpg', 'Nouveau', 25, '2025-04-07 14:00:00'),
 ('Robe de Princesse', 'Robe de princesse pour les petites filles qui rêvent en grand.', 34.99, NULL, 'Enfants', 'images/product-8.jpg', NULL, 18, '2025-04-08 15:15:00');
 
--- Adresses
 INSERT INTO address (user_id, address_line1, address_line2, city, postal_code, country, is_default) VALUES
 (2, '123 Rue de Paris', 'Apt 4B', 'Paris', '75001', 'France', TRUE),
 (3, '45 Avenue Victor Hugo', NULL, 'Lyon', '69002', 'France', TRUE),
 (4, '78 Boulevard Saint-Michel', '3ème étage', 'Paris', '75006', 'France', TRUE),
 (5, '12 Rue de la République', NULL, 'Marseille', '13001', 'France', TRUE);
 
--- Commandes
 INSERT INTO `order` (user_id, total_amount, status, shipping_address, created_at) VALUES
 (2, 129.99, 'completed', '123 Rue de Paris, Apt 4B, 75001 Paris, France', '2025-05-23 09:00:00'),
 (3, 89.50, 'pending', '45 Avenue Victor Hugo, 69002 Lyon, France', '2025-05-22 14:30:00'),
 (4, 245.00, 'completed', '78 Boulevard Saint-Michel, 3ème étage, 75006 Paris, France', '2025-05-21 11:15:00'),
 (5, 75.25, 'cancelled', '12 Rue de la République, 13001 Marseille, France', '2025-05-20 16:45:00');
 
--- Articles de commande
 INSERT INTO order_item (order_id, product_id, quantity, price) VALUES
 (1, 1, 1, 29.99),
 (1, 3, 1, 59.99),
@@ -188,13 +191,11 @@ INSERT INTO order_item (order_id, product_id, quantity, price) VALUES
 (4, 1, 1, 29.99),
 (4, 7, 1, 39.99);
 
--- Messages de contact
 INSERT INTO contact_message (name, email, subject, message, status, created_at) VALUES
 ('Jean Dupont', 'jean.dupont@example.com', 'Question sur ma commande', 'Bonjour, je voudrais savoir quand ma commande sera livrée?', 'pending', '2025-05-24 10:00:00'),
 ('Marie Leroy', 'marie.leroy@example.com', 'Problème avec un produit', 'Le produit reçu ne correspond pas à la description', 'completed', '2025-05-23 14:30:00'),
 ('Paul Martin', 'paul.martin@example.com', 'Demande de partenariat', 'Nous souhaiterions établir un partenariat avec votre boutique', 'pending', '2025-05-25 09:15:00');
 
--- Avis produits
 INSERT INTO review (product_id, user_id, rating, comment, created_at) VALUES
 (1, 2, 5, 'Excellent t-shirt, très confortable et de bonne qualité.', '2025-05-24 10:00:00'),
 (1, 3, 4, 'Bon produit, taille un peu grande.', '2025-05-25 11:30:00'),
@@ -202,7 +203,6 @@ INSERT INTO review (product_id, user_id, rating, comment, created_at) VALUES
 (3, 5, 4, 'Très bon jean, confortable et stylé.', '2025-05-27 14:20:00'),
 (4, 2, 5, 'Veste parfaite pour la pluie, légère et efficace.', '2025-05-28 16:15:00');
 
--- Favoris
 INSERT INTO wishlist (user_id, product_id, added_at) VALUES
 (2, 5, '2025-05-20 09:30:00'),
 (2, 6, '2025-05-20 09:35:00'),
@@ -211,30 +211,24 @@ INSERT INTO wishlist (user_id, product_id, added_at) VALUES
 (4, 7, '2025-05-22 11:25:00'),
 (5, 2, '2025-05-23 12:10:00');
 
--- Procédures stockées et triggers (inchangés)
+-- Procédures stockées et triggers
 DELIMITER //
 CREATE PROCEDURE update_stock_after_order(IN order_id_param INT)
 BEGIN
     DECLARE done INT DEFAULT FALSE;
     DECLARE product_id_var INT;
     DECLARE quantity_var INT;
-    
     DECLARE cur CURSOR FOR 
         SELECT product_id, quantity FROM order_item WHERE order_id = order_id_param;
-    
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
-    
     OPEN cur;
-    
     read_loop: LOOP
         FETCH cur INTO product_id_var, quantity_var;
         IF done THEN
             LEAVE read_loop;
         END IF;
-        
         UPDATE product SET stock = stock - quantity_var WHERE id = product_id_var;
     END LOOP;
-    
     CLOSE cur;
 END //
 DELIMITER ;
@@ -277,7 +271,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- Vues (inchangées)
+-- Vues
 CREATE VIEW product_stats AS
 SELECT 
     p.id,
