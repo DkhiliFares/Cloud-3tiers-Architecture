@@ -129,7 +129,12 @@ Accés à l'instance EC2-Fronted-A depuis bastionHost en utilisant le key AccesS
 ![image](https://github.com/user-attachments/assets/73319a8b-2d7e-46d2-bfaa-7539a2f5b04b)
 
 3. Déployez deux instances EC2 pour le backend (une par AZ) dans les sous-réseaux privés.
-   
+   Instance EC2-Backend-A
+   ![image](https://github.com/user-attachments/assets/3828c6dd-3e93-4332-803b-0f843963b55e)
+
+   Instance EC2-Backend-B
+   ![image](https://github.com/user-attachments/assets/90692dc3-b701-48df-b804-032e129ac79b)
+
 5. Déployez une instance Bastion dans un sous-réseau public(publicSubnetB).
 ![image](https://github.com/user-attachments/assets/15eea3dc-a430-461e-8fdf-a6af838c41a8)
 
@@ -137,7 +142,21 @@ Accés au bastion host depuis mon pc local en utilisant le key AccesSSHBastionHo
 ![image](https://github.com/user-attachments/assets/a62e2dc7-b5cf-41c5-8c9e-82c24d8730dc)
 
 7. Configurez un Application Load Balancer (ALB) pour le frontend et le backend.
-8. Configurez des groupes Auto Scaling pour le frontend et le backend avec des règles basées sur l'utilisation CPU ou le nombre de requêtes.
+   ![image](https://github.com/user-attachments/assets/b6541762-7124-4b54-a9be-fe65fee294d3)
+   
+   ALB pour la frontend
+   ![image](https://github.com/user-attachments/assets/4c808f61-63e0-4a1f-982a-f955a49e1e56)
+   Forward to Target group TG-Frontend
+   ![image](https://github.com/user-attachments/assets/08c0aefc-9619-471d-af1a-ac861b02a8d5)
+
+   ALB pour le backend
+   ![image](https://github.com/user-attachments/assets/86bc5573-76fb-4fd5-b59a-f3156b78776e)
+   Forward to Target group TG-Backend 
+   ![image](https://github.com/user-attachments/assets/4288bb1d-6df7-4d44-a66a-e22678ac2886)
+
+
+
+9. Configurez des groupes Auto Scaling pour le frontend et le backend avec des règles basées sur l'utilisation CPU ou le nombre de requêtes.
 
 ### Étape 4 : Déploiement de la Base de Données (Amazon RDS)
 1. Créez une instance RDS (MySQL ou PostgreSQL) dans les sous-réseaux privés.
