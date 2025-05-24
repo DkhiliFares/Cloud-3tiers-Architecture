@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - ModaStyle</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>ModaStyle</h1>
+            </div>
+            <nav>
+                <ul class="menu">
+                    <li><a href="../index.html">Accueil</a></li>
+                    <li><a href="hommes.html">Hommes</a></li>
+                    <li><a href="femmes.html">Femmes</a></li>
+                    <li><a href="enfants.html">Enfants</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <a href="panier.html" class="cart-icon"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a>
+                <a href="compte.html" class="user-icon active"><i class="fas fa-user"></i></a>
+                <button class="mobile-menu-btn" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-menu" id="mobile-menu">
+        <ul>
+            <li><a href="../index.html">Accueil</a></li>
+            <li><a href="hommes.html">Hommes</a></li>
+            <li><a href="femmes.html">Femmes</a></li>
+            <li><a href="enfants.html">Enfants</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="compte.html" class="active">Mon Compte</a></li>
+            <li><a href="panier.html">Panier</a></li>
+        </ul>
+    </div>
+
+    <section class="account-section">
+        <div class="container">
+            <div class="account-container">
+                <div class="account-header">
+                    <h2>Connexion / Inscription</h2>
+                </div>
+                
+                <div class="account-tabs">
+                    <div class="account-tab active" data-tab="login">Connexion</div>
+                    <div class="account-tab" data-tab="register">Inscription</div>
+                </div>
+                
+                <div class="account-content active" id="login-content">
+                    <form id="login-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="login-email">Email</label>
+                            <input type="email" id="login-email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Mot de passe</label>
+                            <input type="password" id="login-password" class="form-control" required>
+                        </div>
+                        <div class="form-group form-checkbox">
+                            <input type="checkbox" id="remember-me">
+                            <label for="remember-me">Se souvenir de moi</label>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-block">Se connecter</button>
+                        </div>
+                  
+                    </form>
+                </div>
+                
+                <div class="account-content" id="register-content">
+                    <form id="register-form" class="auth-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="register-firstname">Prénom</label>
+                                <input type="text" id="register-firstname" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="register-lastname">Nom</label>
+                                <input type="text" id="register-lastname" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-email">Email</label>
+                            <input type="email" id="register-email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password">Mot de passe</label>
+                            <input type="password" id="register-password" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-confirm-password">Confirmer le mot de passe</label>
+                            <input type="password" id="register-confirm-password" class="form-control" required>
+                        </div>
+                        <div class="form-group form-checkbox">
+                            <input type="checkbox" id="terms" required>
+                            <label for="terms">J'accepte les <a href="conditions.html">conditions d'utilisation</a> et la <a href="confidentialite.html">politique de confidentialité</a></label>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-block">S'inscrire</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ModaStyle</h3>
+                    <p>Votre boutique de vêtements en ligne préférée. Qualité, style et prix abordables.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Liens Rapides</h3>
+                    <ul>
+                        <li><a href="../index.html">Accueil</a></li>
+                        <li><a href="hommes.html">Hommes</a></li>
+                        <li><a href="femmes.html">Femmes</a></li>
+                        <li><a href="enfants.html">Enfants</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Service Client</h3>
+                    <ul>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="livraison.html">Livraison</a></li>
+                        <li><a href="retours.html">Retours</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Suivez-nous</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ModaStyle. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+</body>
+</html>

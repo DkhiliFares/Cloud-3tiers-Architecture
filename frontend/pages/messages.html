@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - ModaStyle</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .status-badge.pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .status-badge.completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .btn-small {
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+        .complete-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .complete-btn:hover {
+            background-color: #218838;
+        }
+        .messages-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .messages-table th, .messages-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .messages-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            color: white;
+            z-index: 1000;
+            display: none;
+        }
+        .notification.success {
+            background-color: #28a745;
+        }
+        .notification.error {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">ModaStyle</a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Accueil</a></li>
+                    <li><a href="hommes.html">Hommes</a></li>
+                    <li><a href="femmes.html">Femmes</a></li>
+                    <li><a href="enfants.html">Enfants</a></li>
+                </ul>
+            </nav>
+            <div class="header-icons">
+                <a href="messages.html" class="icon-link admin-only active"><i class="fas fa-envelope"></i> Messages</a>
+                <a href="profil.html" class="icon-link"><i class="fas fa-user"></i></a>
+                <a href="panier.html" class="icon-link"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a>
+            </div>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-menu">
+        <ul>
+            <li><a href="../index.html">Accueil</a></li>
+            <li><a href="hommes.html">Hommes</a></li>
+            <li><a href="femmes.html">Femmes</a></li>
+            <li><a href="enfants.html">Enfants</a></li>
+            <li><a href="profil.html">Mon Profil</a></li>
+            <li><a href="panier.html">Panier</a></li>
+            <li class="admin-only" style="display: none;"><a href="messages.html">Messages</a></li>
+        </ul>
+    </div>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Messages reçus</h1>
+            <div class="breadcrumb">
+                <a href="../index.html">Accueil</a> / <span>Messages</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="admin-section">
+        <div class="container">
+            <div class="admin-actions">
+                <button id="refreshMessages" class="btn">
+                    <i class="fas fa-sync-alt"></i> Actualiser
+                </button>
+            </div>
+            
+            <table class="messages-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Sujet</th>
+                        <th>Message</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="messagesBody">
+                    <!-- Les messages seront chargés ici via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <div id="notification" class="notification" style="display: none;"></div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <!-- Votre footer existant -->
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Vérifier si l'utilisateur est admin
+            checkAdminStatus();
+            
+            // Charger les messages
+            loadMessages();
+            
+            // Bouton d'actualisation
+            document.getElementById('refreshMessages').addEventListener('click', loadMessages);
+        });
+
+        function checkAdminStatus() {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (!user || !user.is_admin) {
+                window.location.href = 'profil.html';
+            }
+        }
+
+        function loadMessages() {
+            fetch('http://localhost:5000/api/contact/messages', {
+                credentials: 'include'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erreur réseau');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    displayMessages(data.messages);
+                } else {
+                    showNotification(data.message || 'Erreur lors du chargement des messages', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                showNotification('Erreur de connexion au serveur', 'error');
+            });
+        }
+
+        function displayMessages(messages) {
+            const tbody = document.getElementById('messagesBody');
+            tbody.innerHTML = '';
+            
+            if (messages.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Aucun message à afficher</td></tr>';
+                return;
+            }
+            
+            messages.forEach(msg => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${new Date(msg.created_at).toLocaleString()}</td>
+                    <td>${msg.name}</td>
+                    <td><a href="mailto:${msg.email}">${msg.email}</a></td>
+                    <td>${msg.subject}</td>
+                    <td>${msg.message}</td>
+                    <td>
+                        <span class="status-badge ${msg.status === 'completed' ? 'completed' : 'pending'}">
+                            ${msg.status === 'completed' ? 'Traité' : 'En attente'}
+                        </span>
+                    </td>
+                    <td>
+                        ${msg.status === 'pending' ? 
+                            `<button class="btn btn-small complete-btn" data-id="${msg.id}">
+                                <i class="fas fa-check"></i> Marquer comme traité
+                            </button>` 
+                            : ''}
+                    </td>
+                `;
+                
+                // Ajouter l'événement au bouton
+                const btn = tr.querySelector('.complete-btn');
+                if (btn) {
+                    btn.addEventListener('click', () => markMessageAsCompleted(msg.id));
+                }
+                
+                tbody.appendChild(tr);
+            });
+        }
+
+function markMessageAsCompleted(messageId) {
+    console.log("Tentative de marquage du message ID:", messageId); // Debug
+    
+    fetch(`http://localhost:5000/api/contact/messages/${messageId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include', // Important pour les cookies de session
+        body: JSON.stringify({ 
+            status: 'completed' 
+        })
+    })
+    .then(response => {
+        console.log("Réponse reçue:", response); // Debug
+        if (!response.ok) {
+            return response.json().then(err => {
+                throw new Error(err.message || 'Erreur serveur');
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Données reçues:", data); // Debug
+        if (data.success) {
+            showNotification('Message marqué comme traité', 'success');
+            // Mise à jour locale sans recharger toute la page
+            const badge = document.querySelector(`tr[data-id="${messageId}"] .status-badge`);
+            if (badge) {
+                badge.textContent = 'Traité';
+                badge.classList.remove('pending');
+                badge.classList.add('completed');
+                const btn = document.querySelector(`tr[data-id="${messageId}"] .complete-btn`);
+                if (btn) btn.remove();
+            }
+        } else {
+            throw new Error(data.message || 'Erreur inconnue');
+        }
+    })
+    .catch(error => {
+        console.error("Erreur complète:", error); // Debug
+        showNotification(error.message || 'Erreur lors de la mise à jour', 'error');
+    });
+}
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

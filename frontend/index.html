@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModaStyle - Boutique de Vêtements en Ligne</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>ModaStyle</h1>
+            </div>
+            <nav>
+                <ul class="menu">
+                    <li><a href="index.html" class="active">Accueil</a></li>
+                    <li><a href="pages/hommes.html">Hommes</a></li>
+                    <li><a href="pages/femmes.html">Femmes</a></li>
+                    <li><a href="pages/enfants.html">Enfants</a></li>
+                    <li><a href="pages/contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <a href="pages/panier.html" class="cart-icon"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a>
+                <a href="pages/compte.html" class="user-icon"><i class="fas fa-user"></i></a>
+                <button class="mobile-menu-btn" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-menu" id="mobile-menu">
+        <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="pages/hommes.html">Hommes</a></li>
+            <li><a href="pages/femmes.html">Femmes</a></li>
+            <li><a href="pages/enfants.html">Enfants</a></li>
+            <li><a href="pages/contact.html">Contact</a></li>
+            <li><a href="pages/compte.html">Mon Compte</a></li>
+            <li><a href="pages/panier.html">Panier</a></li>
+        </ul>
+    </div>
+
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h2>Nouvelle Collection Été 2025</h2>
+            <p>Des styles frais, modernes et colorés pour une saison ensoleillée ☀️</p>
+            <a href="pages/nouveautes.html" class="btn btn-hero">Découvrir</a>
+        </div>
+    </div>
+</section>
+
+
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Catégories Populaires</h2>
+            <div class="category-grid">
+                <div class="category-card">
+                    <a href="pages/hommes.html" class="full-link"></a>
+                    <img src="images/category-men.jpg" alt="Mode Homme" class="placeholder-img">
+                    <div class="category-info">
+                        <h3>Hommes</h3>
+                        <span class="btn-small">Voir</span>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <a href="pages/femmes.html" class="full-link"></a>
+                    <img src="images/category-women.jpg" alt="Mode Femme" class="placeholder-img">
+                    <div class="category-info">
+                        <h3>Femmes</h3>
+                        <span class="btn-small">Voir</span>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <a href="pages/enfants.html" class="full-link"></a>
+                    <img src="images/category-kids.jpg" alt="Mode Enfant" class="placeholder-img">
+                    <div class="category-info">
+                        <h3>Enfants</h3>
+                        <span class="btn-small">Voir</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="featured-products">
+        <div class="container">
+            <h2 class="section-title">Aperçu des produits</h2>
+            <div class="product-grid" id="featured-products">
+                <!-- Les produits seront chargés dynamiquement via JavaScript -->
+                <div class="loading-message">Chargement des produits...</div>
+            </div>
+        </div>
+    </section>
+
+
+
+   
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ModaStyle</h3>
+                    <p>Votre boutique de vêtements en ligne préférée. Qualité, style et prix abordables.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Liens Rapides</h3>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="pages/hommes.html">Hommes</a></li>
+                        <li><a href="pages/femmes.html">Femmes</a></li>
+                        <li><a href="pages/enfants.html">Enfants</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Service Client</h3>
+                    <ul>
+                        <li><a href="pages/contact.html">Contact</a></li>
+                        <li><a href="pages/livraison.html">Livraison</a></li>
+                        <li><a href="pages/retours.html">Retours</a></li>
+                        <li><a href="pages/faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Suivez-nous</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ModaStyle. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+const cartCountElement = document.getElementById('cart-count');
+const initialTotalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+cartCountElement.textContent = initialTotalQuantity;
+
+        // Fonction pour charger les produits depuis l'API
+        async function loadFeaturedProducts() {
+            try {
+                const response = await fetch('http://localhost:5000/api/products');
+                
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP! Statut: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log("Données reçues:", data);
+                
+                if (data.success && data.products && data.products.length > 0) {
+                    displayProducts(data.products);
+                } else {
+                    showErrorMessage("Aucun produit disponible pour le moment.");
+                }
+            } catch (error) {
+                console.error("Erreur lors du chargement des produits:", error);
+                showErrorMessage("Impossible de charger les produits. Veuillez réessayer plus tard.");
+            }
+        }
+
+     function displayProducts(products) {
+    const productsContainer = document.getElementById('featured-products');
+    productsContainer.innerHTML = '';
+
+    const featuredProducts = products.slice(0, 8);
+
+    featuredProducts.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
+
+        
+        const cartItem = cart.find(item => item.product_id == product.id);
+        const quantity = cartItem ? (product.stock-cartItem.quantity) : product.stock;
+        const outOfStock = quantity === 0;
+        productCard.innerHTML = `
+            <div class="product-image">
+                ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+                <img src="${product.image_url || 'images/product-placeholder.jpg'}" alt="${product.name}">
+                ${outOfStock ? `<div class="product-badge" style="background-color: var(--error-color)">Rupture de stock</div>` : ''}
+            </div>
+            <div class="product-info">
+                <span class="product-category">${product.category}</span>
+                <h3 class="product-title">${product.name}</h3>
+                <div class="product-price">
+                    <span class="current-price">${product.price.toFixed(2)}€</span>
+                    ${product.old_price ? `<span class="old-price">${product.old_price.toFixed(2)}€</span>` : ''}
+                </div>
+                <p class="stock-info" data-id="${product.id}">Stock disponible : ${quantity}</p>
+
+                <div class="product-actions">
+                    ${outOfStock ? '' : `    <button class="add-to-cart " data-id="${product.id}" data-stock="${product.stock}" ${outOfStock ? 'disabled' : ''}>
+                        <i class="fas fa-shopping-cart"></i> Ajouter
+                    </button>`}
+                
+                  
+                </div>
+            </div>
+        `;
+
+        productsContainer.appendChild(productCard);
+    });
+
+    setupEventListeners();
+}
+
+        // Fonction pour afficher un message d'erreur
+        function showErrorMessage(message) {
+            const productsContainer = document.getElementById('featured-products');
+            productsContainer.innerHTML = `
+                <div class="error-message">
+                    <p>${message}</p>
+                    <button onclick="loadFeaturedProducts()" class="btn-small">Réessayer</button>
+                </div>
+            `;
+        }
+
+        // Fonction pour configurer les écouteurs d'événements
+        function setupEventListeners() {
+            // Boutons "Ajouter au panier"
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', addToCart);
+            });
+            
+            // Boutons "Wishlist"
+            document.querySelectorAll('.wishlist-btn').forEach(button => {
+                button.addEventListener('click', toggleWishlist);
+            });
+        }
+function addToCart(event) {
+    const button = event.currentTarget;
+    const productId = button.getAttribute('data-id');
+    const stock = parseInt(button.getAttribute('data-stock'));
+    const stockInfo = document.querySelector(`.stock-info[data-id="${productId}"]`);
+
+    // Recherche dans le panier local
+    let cartItem = cart.find(item => item.product_id === productId);
+
+    if (cartItem) {
+        if (cartItem.quantity < stock) {
+            cartItem.quantity += 1;
+            updateCartCount(1);
+
+            // Mettre à jour le stock affiché
+            const remaining = stock - cartItem.quantity;
+            stockInfo.textContent = `Stock disponible : ${remaining}`;
+
+            // Désactiver le bouton si stock épuisé
+            if (cartItem.quantity >= stock) {
+                button.disabled = true;
+                button.innerHTML = '<i class="fas fa-ban"></i> Limite atteinte';
+            }
+        } else {
+            alert("Stock maximum atteint pour ce produit.");
+            return;
+        }
+    } else {
+        cartItem = { product_id: productId, quantity: 1 };
+        cart.push(cartItem);
+        updateCartCount(1);
+        stockInfo.textContent = `Stock disponible : ${stock - 1}`;
+
+        // Si stock était 1, désactiver le bouton
+        if (stock - 1 === 0) {
+            button.disabled = true;
+            button.innerHTML = '<i class="fas fa-ban"></i> Limite atteinte';
+        }
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    // Feedback visuel rapide
+    button.innerHTML = '<i class="fas fa-check"></i> Ajouté';
+    button.style.backgroundColor = '#28a745';
+    setTimeout(() => {
+        if (!button.disabled) {
+            button.innerHTML = '<i class="fas fa-shopping-cart"></i> Ajouter';
+            button.style.backgroundColor = '';
+        }
+    }, 1500);
+}
+
+        // Fonction pour basculer la wishlist
+        function toggleWishlist(event) {
+            const button = event.currentTarget;
+            const icon = button.querySelector('i');
+            
+            if (icon.classList.contains('far')) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                icon.style.color = '#ff6b6b';
+            } else {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                icon.style.color = '';
+            }
+        }
+
+        // Fonction pour mettre à jour le compteur du panier
+        function updateCartCount(quantity = 1) {
+            const cartCount = document.getElementById('cart-count');
+            let currentCount = parseInt(cartCount.textContent) || 0;
+            cartCount.textContent = currentCount + quantity;
+            
+            // Animation
+            cartCount.style.transform = 'scale(1.5)';
+            setTimeout(() => {
+                cartCount.style.transform = 'scale(1)';
+            }, 300);
+        }
+
+        // Gestion du menu mobile
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('active');
+        });
+
+  
+
+        // Charger les produits au démarrage
+        document.addEventListener('DOMContentLoaded', loadFeaturedProducts);
+    </script>
+</body>
+</html>

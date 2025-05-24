@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vêtements Enfants - ModaStyle</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">ModaStyle</a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Accueil</a></li>
+                    <li><a href="hommes.html">Hommes</a></li>
+                    <li><a href="femmes.html">Femmes</a></li>
+                    <li><a href="enfants.html" class="active">Enfants</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-icons">
+                <a href="compte.html" class="icon-link"><i class="fas fa-user"></i></a>
+                <a href="panier.html" class="icon-link"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a>
+            </div>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <div class="mobile-menu">
+        <ul class="menu">
+            <li><a href="../index.html">Accueil</a></li>
+            <li><a href="hommes.html">Hommes</a></li>
+            <li><a href="femmes.html">Femmes</a></li>
+            <li><a href="enfants.html" class="active">Enfants</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="compte.html">Mon Compte</a></li>
+            <li><a href="panier.html">Panier</a></li>
+        </ul>
+    </div>
+    
+    <section class="page-header">
+        <div class="container">
+            <h1>Vêtements Enfants</h1>
+            <div class="breadcrumb">
+                <a href="../index.html">Accueil</a> / <span>Enfants</span>
+            </div>
+        </div>
+    </section>
+    
+    <section class="products-section">
+        <div class="container">
+            <div class="products-grid-container">
+                <div class="advanced-filters">
+                    <h4>Filtres avancés</h4>
+                    <label>Date min :
+                        <input type="date" id="filter-date" />
+                    </label>
+                    <label>Prix min :
+                        <input type="number" id="filter-price-min" min="0" />
+                    </label>
+                    <label>Prix max :
+                        <input type="number" id="filter-price-max" min="0" />
+                    </label>
+                    <label>Tranche d'âge :
+                        <select id="filter-age">
+                            <option value="">Tous</option>
+                            <option value="0-3">0-3 ans</option>
+                            <option value="4-8">4-8 ans</option>
+                            <option value="9-12">9-12 ans</option>
+                        </select>
+                    </label>
+                    <button id="apply-filters" class="btn-small">Appliquer</button>
+                </div>
+
+                <div class="products-grid">
+                    <div class="sort-options">
+                        <label>Trier par :
+                            <select id="sort">
+                                <option value="default">Par défaut</option>
+                                <option value="price-asc">Prix croissant</option>
+                                <option value="price-desc">Prix décroissant</option>
+                                <option value="newest">Plus récent</option>
+                            </select>
+                        </label>
+                    </div>
+                    
+                    <div class="product-grid" id="products-container">
+                        <div class="loading-message">Chargement des produits...</div>
+                    </div>
+                    <div class="pagination" id="pagination-container"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Restez informé</h2>
+                <p>Inscrivez-vous à notre newsletter pour recevoir nos offres exclusives</p>
+                <form id="newsletter-form">
+                    <input type="email" placeholder="Votre adresse email" required>
+                    <button type="submit" class="btn">S'inscrire</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ModaStyle</h3>
+                    <p>Votre boutique de vêtements en ligne préférée. Qualité, style et prix abordables.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Liens Rapides</h3>
+                    <ul>
+                        <li><a href="../index.html">Accueil</a></li>
+                        <li><a href="hommes.html">Hommes</a></li>
+                        <li><a href="femmes.html">Femmes</a></li>
+                        <li><a href="enfants.html">Enfants</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Service Client</h3>
+                    <ul>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="livraison.html">Livraison</a></li>
+                        <li><a href="retours.html">Retours</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Suivez-nous</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ModaStyle. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Variables globales
+        let allProducts = [];
+        let filteredProducts = [];
+        let currentPage = 1;
+        const productsPerPage = 12;
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartCountElement = document.getElementById('cart-count');
+        
+        // Initialiser le compteur du panier
+        const initialTotalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartCountElement.textContent = initialTotalQuantity;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadKidsProducts();
+            document.getElementById('sort').addEventListener('change', applySort);
+            document.getElementById('apply-filters').addEventListener('click', applyFilters);
+            document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+            
+            document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                this.innerHTML = '<p class="success-message">Merci pour votre inscription!</p>';
+            });
+        });
+
+        function toggleMobileMenu() {
+            document.querySelector('.mobile-menu').classList.toggle('active');
+        }
+
+        async function loadKidsProducts() {
+            try {
+                const response = await fetch('http://localhost:5000/api/products?category=enfants');
+                const data = await response.json();
+                
+                if (data.success && data.products.length > 0) {
+                    allProducts = data.products;
+                    applyFilters();
+                } else {
+                    showErrorMessage("Aucun produit disponible pour les enfants.");
+                }
+            } catch (error) {
+                console.error('Erreur lors du chargement des produits:', error);
+                showErrorMessage("Impossible de charger les produits. Veuillez réessayer plus tard.");
+            }
+        }
+
+        function applyFilters() {
+            const priceMin = parseFloat(document.getElementById('filter-price-min').value) || 0;
+            const priceMax = parseFloat(document.getElementById('filter-price-max').value) || Infinity;
+            const ageGroup = document.getElementById('filter-age').value;
+            const minDate = document.getElementById('filter-date').value;
+
+            filteredProducts = allProducts.filter(product => {
+                const inPriceRange = product.price >= priceMin && product.price <= priceMax;
+                const ageMatch = ageGroup ? (product.age_group === ageGroup) : true;
+                const dateMatch = minDate ? new Date(product.created_at) >= new Date(minDate) : true;
+                return inPriceRange && ageMatch && dateMatch;
+            });
+
+            currentPage = 1;
+            applySort();
+        }
+
+        function applySort() {
+            const sortValue = document.getElementById('sort').value;
+            let sorted = [...filteredProducts];
+
+            if (sortValue === 'price-asc') {
+                sorted.sort((a, b) => a.price - b.price);
+            } else if (sortValue === 'price-desc') {
+                sorted.sort((a, b) => b.price - a.price);
+            } else if (sortValue === 'newest') {
+                sorted.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            }
+
+            displayPage(sorted);
+        }
+
+        function displayPage(products) {
+            const container = document.getElementById('products-container');
+            
+            if (products.length === 0) {
+                container.innerHTML = '<p class="no-products">Aucun produit ne correspond à vos critères.</p>';
+                document.getElementById('pagination-container').innerHTML = '';
+                return;
+            }
+
+            container.innerHTML = '';
+            const start = (currentPage - 1) * productsPerPage;
+            const end = start + productsPerPage;
+            const pageProducts = products.slice(start, end);
+
+            pageProducts.forEach(product => {
+                const cartItem = cart.find(item => item.product_id == product.id);
+                const quantityInCart = cartItem ? cartItem.quantity : 0;
+                const availableStock = product.stock - quantityInCart;
+                const outOfStock = availableStock <= 0;
+
+                const card = document.createElement('div');
+                card.className = 'product-card kids-card';
+                card.innerHTML = `
+                    <div class="product-image">
+                        <img src="../${product.image_url || '../images/kids-placeholder.jpg'}" alt="${product.name}">
+                        ${product.badge ? `<div class="product-badge ${product.badge.toLowerCase()}">${product.badge}</div>` : ''}
+                        ${outOfStock ? '<div class="product-badge stock-out">Rupture</div>' : ''}
+                        ${product.age_group ? `<div class="age-badge">${product.age_group}</div>` : ''}
+                    </div>
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <div class="product-price">
+                            <span>${product.price.toFixed(2)} €</span>
+                            ${product.old_price ? `<span class="old-price">${product.old_price.toFixed(2)} €</span>` : ''}
+                        </div>
+                        <p class="stock-info" data-id="${product.id}">Stock: ${availableStock}</p>
+                        <div class="product-actions">
+                            ${outOfStock ? '' : `
+                                <button class="add-to-cart" data-id="${product.id}" data-stock="${product.stock}">
+                                    <i class="fas fa-shopping-cart"></i> ${quantityInCart > 0 ? `(${quantityInCart}) Ajouter` : 'Ajouter'}
+                                </button>
+                            `}
+                            
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            setupEventListeners();
+            renderPagination(products.length);
+        }
+
+        function setupEventListeners() {
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', addToCart);
+            });
+            
+            document.querySelectorAll('.wishlist-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const icon = this.querySelector('i');
+                    icon.classList.toggle('far');
+                    icon.classList.toggle('fas');
+                    icon.style.color = icon.classList.contains('fas') ? '#ff6b6b' : '';
+                });
+            });
+        }
+
+        function addToCart(event) {
+            const button = event.currentTarget;
+            const productId = button.getAttribute('data-id');
+            const stock = parseInt(button.getAttribute('data-stock'));
+            const stockInfo = document.querySelector(`.stock-info[data-id="${productId}"]`);
+
+            button.classList.add('clicked');
+            setTimeout(() => button.classList.remove('clicked'), 300);
+
+            let cartItem = cart.find(item => item.product_id === productId);
+
+            if (cartItem) {
+                if (cartItem.quantity < stock) {
+                    cartItem.quantity += 1;
+                    updateCartCount(1);
+
+                    const remaining = stock - cartItem.quantity;
+                    stockInfo.textContent = `Stock: ${remaining}`;
+                    button.innerHTML = `<i class="fas fa-shopping-cart"></i> (${cartItem.quantity}) Ajouter`;
+
+                    if (remaining <= 0) {
+                        button.disabled = true;
+                        button.innerHTML = '<i class="fas fa-ban"></i> Stock épuisé';
+                        const productCard = button.closest('.product-card');
+                        if (productCard) {
+                            const imageContainer = productCard.querySelector('.product-image');
+                            imageContainer.innerHTML += '<div class="product-badge stock-out">Rupture</div>';
+                        }
+                    }
+                } else {
+                    showTempMessage(button, "Stock maximum atteint", "error");
+                    return;
+                }
+            } else {
+                cart.push({ product_id: productId, quantity: 1 });
+                updateCartCount(1);
+                stockInfo.textContent = `Stock: ${stock - 1}`;
+                button.innerHTML = '<i class="fas fa-shopping-cart"></i> (1) Ajouter';
+
+                if (stock - 1 <= 0) {
+                    button.disabled = true;
+                    button.innerHTML = '<i class="fas fa-ban"></i> Stock épuisé';
+                    const productCard = button.closest('.product-card');
+                    if (productCard) {
+                        const imageContainer = productCard.querySelector('.product-image');
+                        imageContainer.innerHTML += '<div class="product-badge stock-out">Rupture</div>';
+                    }
+                }
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            showTempMessage(button, "Ajouté au panier", "success");
+        }
+
+        function showTempMessage(element, message, type) {
+            const originalHTML = element.innerHTML;
+            element.innerHTML = `<i class="fas fa-${type === 'success' ? 'check' : 'exclamation'}"></i> ${message}`;
+            element.style.backgroundColor = type === 'success' ? '#28a745' : '#dc3545';
+            
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style.backgroundColor = '';
+            }, 1500);
+        }
+
+        function updateCartCount(quantity = 1) {
+            let currentCount = parseInt(cartCountElement.textContent) || 0;
+            cartCountElement.textContent = currentCount + quantity;
+            
+            cartCountElement.classList.add('pulse');
+            setTimeout(() => {
+                cartCountElement.classList.remove('pulse');
+            }, 300);
+        }
+
+        function renderPagination(totalProducts) {
+            const totalPages = Math.ceil(totalProducts / productsPerPage);
+            const paginationContainer = document.getElementById('pagination-container');
+            paginationContainer.innerHTML = '';
+
+            if (totalPages <= 1) return;
+
+            if (currentPage > 1) {
+                const prevBtn = document.createElement('button');
+                prevBtn.className = 'pagination-btn prev';
+                prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+                prevBtn.addEventListener('click', () => {
+                    currentPage--;
+                    applySort();
+                });
+                paginationContainer.appendChild(prevBtn);
+            }
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = `pagination-btn ${i === currentPage ? 'active' : ''}`;
+                pageBtn.textContent = i;
+                pageBtn.addEventListener('click', () => {
+                    currentPage = i;
+                    applySort();
+                });
+                paginationContainer.appendChild(pageBtn);
+            }
+
+            if (currentPage < totalPages) {
+                const nextBtn = document.createElement('button');
+                nextBtn.className = 'pagination-btn next';
+                nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+                nextBtn.addEventListener('click', () => {
+                    currentPage++;
+                    applySort();
+                });
+                paginationContainer.appendChild(nextBtn);
+            }
+        }
+
+        function showErrorMessage(message) {
+            const container = document.getElementById('products-container');
+            container.innerHTML = `
+                <div class="error-message">
+                    <p>${message}</p>
+                    <button onclick="loadKidsProducts()" class="btn-small">Réessayer</button>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
