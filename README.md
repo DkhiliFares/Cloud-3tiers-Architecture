@@ -162,6 +162,10 @@ Accés au bastion host depuis mon pc local en utilisant le key AccesSSHBastionHo
 1. Créez une instance RDS (MySQL ou PostgreSQL) dans les sous-réseaux privés.
 2. Activez Multi-AZ pour la haute disponibilité.
 3. Attachez le groupe de sécurité SG-DB.
+![Capture d'écran 2025-05-24 052618](https://github.com/user-attachments/assets/5505e715-28eb-4584-87b8-50c2cf158409)
+
+Connexion et Creation de la db 'mydb'
+![image](https://github.com/user-attachments/assets/5db701d0-639c-48bf-8f76-895ec689dc39)
 
 ### Étape 5 : Configuration de S3 et CloudFront
 1. Créez un bucket S3 pour stocker les fichiers statiques.
