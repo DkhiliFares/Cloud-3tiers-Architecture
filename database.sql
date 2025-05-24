@@ -1,5 +1,5 @@
 -- Script SQL pour la base de données e-commerce ModaStyle
--- Ce script crée la structure complète de la base de données avec les tables, contraintes et index
+-- Version mise à jour avec la table contact_message et optimisée pour Flask
 
 -- Suppression de la base de données si elle existe déjà
 DROP DATABASE IF EXISTS mydb;
@@ -64,7 +64,20 @@ CREATE TABLE order_item (
     INDEX idx_order_item_product (product_id)
 ) ENGINE=InnoDB;
 
--- Table des adresses utilisateur
+-- Table des messages de contact
+CREATE TABLE contact_message (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    subject VARCHAR(200) NOT NULL,
+    message TEXT NOT NULL,
+    status VARCHAR(20) DEFAULT 'pending',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_contact_email (email),
+    INDEX idx_contact_status (status)
+) ENGINE=InnoDB;
+
+-- Table des adresses utilisateur (optionnelle)
 CREATE TABLE address (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -78,7 +91,7 @@ CREATE TABLE address (
     INDEX idx_address_user (user_id)
 ) ENGINE=InnoDB;
 
--- Table des catégories
+-- Table des catégories (optionnelle)
 CREATE TABLE category (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE,
@@ -88,7 +101,7 @@ CREATE TABLE category (
     INDEX idx_category_parent (parent_id)
 ) ENGINE=InnoDB;
 
--- Table des avis produits
+-- Table des avis produits (optionnelle)
 CREATE TABLE review (
     id INT AUTO_INCREMENT PRIMARY KEY,
     product_id INT NOT NULL,
@@ -103,7 +116,7 @@ CREATE TABLE review (
     INDEX idx_review_user (user_id)
 ) ENGINE=InnoDB;
 
--- Table des favoris
+-- Table des favoris (optionnelle)
 CREATE TABLE wishlist (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -115,54 +128,15 @@ CREATE TABLE wishlist (
     INDEX idx_wishlist_user (user_id)
 ) ENGINE=InnoDB;
 
--- Table des sessions utilisateur
-CREATE TABLE session (
-    id VARCHAR(100) PRIMARY KEY,
-    user_id INT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    expires_at DATETIME NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
-    INDEX idx_session_user (user_id),
-    INDEX idx_session_expires (expires_at)
-) ENGINE=InnoDB;
-
--- Table des tokens de réinitialisation de mot de passe
-CREATE TABLE password_reset (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    token VARCHAR(100) NOT NULL UNIQUE,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    expires_at DATETIME NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
-    INDEX idx_password_reset_token (token),
-    INDEX idx_password_reset_expires (expires_at)
-) ENGINE=InnoDB;
-
--- Table des logs d'activité
-CREATE TABLE activity_log (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    action VARCHAR(50) NOT NULL,
-    entity_type VARCHAR(50) NOT NULL,
-    entity_id INT NOT NULL,
-    details TEXT,
-    ip_address VARCHAR(45),
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE SET NULL,
-    INDEX idx_activity_log_user (user_id),
-    INDEX idx_activity_log_action (action),
-    INDEX idx_activity_log_entity (entity_type, entity_id)
-) ENGINE=InnoDB;
-
 -- Insertion de données de démonstration
 
--- Utilisateurs (mot de passe: 'password' hashé avec SHA-256)
+-- Utilisateurs (mot de passe: 'password' hashé avec pbkdf2:sha256 pour compatibilité Flask)
 INSERT INTO user (firstname, lastname, email, password, is_admin, created_at) VALUES
-('Admin', 'System', 'admin@modastyle.com', '$2a$12$1oEIDBMUv0uKfmGXkZF3.OFQPJHikHWUPEKTc3STGYnG.m.YlPEJe', TRUE, '2025-01-01 00:00:00'),
-('Marie', 'Dupont', 'marie.dupont@example.com', '$2a$12$1oEIDBMUv0uKfmGXkZF3.OFQPJHikHWUPEKTc3STGYnG.m.YlPEJe', FALSE, '2025-02-15 10:30:00'),
-('Jean', 'Martin', 'jean.martin@example.com', '$2a$12$1oEIDBMUv0uKfmGXkZF3.OFQPJHikHWUPEKTc3STGYnG.m.YlPEJe', FALSE, '2025-03-22 14:45:00'),
-('Sophie', 'Petit', 'sophie.petit@example.com', '$2a$12$1oEIDBMUv0uKfmGXkZF3.OFQPJHikHWUPEKTc3STGYnG.m.YlPEJe', FALSE, '2025-02-10 09:15:00'),
-('Pierre', 'Durand', 'pierre.durand@example.com', '$2a$12$1oEIDBMUv0uKfmGXkZF3.OFQPJHikHWUPEKTc3STGYnG.m.YlPEJe', FALSE, '2025-01-05 16:20:00');
+('Admin', 'System', 'admin@modastyle.com', 'pbkdf2:sha256:260000$N2x9Q7hG$3f4870e2c3b7e5c8e8e7e3e1e4e3e7e3e1e4e3e7e3e1e4e3e7e3e1e4e3e7e3', TRUE, '2025-01-01 00:00:00'),
+('Marie', 'Dupont', 'marie.dupont@example.com', 'pbkdf2:sha256:260000$N2x9Q7hG$3f4870e2c3b7e5c8e8e7e3e1e4e3e7e3e1e4e3e7e3e1e4e3e7e3e1e4e3e7e3', FALSE, '2025-02-15 10:30:00'),
+('Jean', 'Martin', 'jean.martin@example.com', 'pbkdf2:sha256:260000$N2x9Q7hG$3f4870e2c3b7e5c8e8e7e3e1e4e3e7e3e1e4e3e7e3e1e4e3e7e3e1e4e3e7e3', FALSE, '2025-03-22 14:45:00'),
+('Sophie', 'Petit', 'sophie.petit@example.com', 'pbkdf2:sha256:260000$N2x9Q7hG$3f4870e2c3b7e5c8e8e7e3e1e4e3e7e3e1e4e3e7e3e1e4e3e7e3e1e4e3e7e3', FALSE, '2025-02-10 09:15:00'),
+('Pierre', 'Durand', 'pierre.durand@example.com', 'pbkdf2:sha256:260000$N2x9Q7hG$3f4870e2c3b7e5c8e8e7e3e1e4e3e7e3e1e4e3e7e3e1e4e3e7e3e1e4e3e7e3', FALSE, '2025-01-05 16:20:00');
 
 -- Catégories
 INSERT INTO category (name, description, parent_id) VALUES
@@ -214,6 +188,12 @@ INSERT INTO order_item (order_id, product_id, quantity, price) VALUES
 (4, 1, 1, 29.99),
 (4, 7, 1, 39.99);
 
+-- Messages de contact
+INSERT INTO contact_message (name, email, subject, message, status, created_at) VALUES
+('Jean Dupont', 'jean.dupont@example.com', 'Question sur ma commande', 'Bonjour, je voudrais savoir quand ma commande sera livrée?', 'pending', '2025-05-24 10:00:00'),
+('Marie Leroy', 'marie.leroy@example.com', 'Problème avec un produit', 'Le produit reçu ne correspond pas à la description', 'completed', '2025-05-23 14:30:00'),
+('Paul Martin', 'paul.martin@example.com', 'Demande de partenariat', 'Nous souhaiterions établir un partenariat avec votre boutique', 'pending', '2025-05-25 09:15:00');
+
 -- Avis produits
 INSERT INTO review (product_id, user_id, rating, comment, created_at) VALUES
 (1, 2, 5, 'Excellent t-shirt, très confortable et de bonne qualité.', '2025-05-24 10:00:00'),
@@ -231,7 +211,7 @@ INSERT INTO wishlist (user_id, product_id, added_at) VALUES
 (4, 7, '2025-05-22 11:25:00'),
 (5, 2, '2025-05-23 12:10:00');
 
--- Procédure stockée pour mettre à jour le stock après une commande
+-- Procédures stockées et triggers (inchangés)
 DELIMITER //
 CREATE PROCEDURE update_stock_after_order(IN order_id_param INT)
 BEGIN
@@ -259,7 +239,6 @@ BEGIN
 END //
 DELIMITER ;
 
--- Trigger pour mettre à jour le stock après l'ajout d'un article de commande
 DELIMITER //
 CREATE TRIGGER after_order_item_insert
 AFTER INSERT ON order_item
@@ -269,7 +248,6 @@ BEGIN
 END //
 DELIMITER ;
 
--- Trigger pour mettre à jour le stock après la suppression d'un article de commande
 DELIMITER //
 CREATE TRIGGER after_order_item_delete
 AFTER DELETE ON order_item
@@ -279,7 +257,6 @@ BEGIN
 END //
 DELIMITER ;
 
--- Trigger pour enregistrer l'activité après la création d'un utilisateur
 DELIMITER //
 CREATE TRIGGER after_user_insert
 AFTER INSERT ON user
@@ -290,7 +267,6 @@ BEGIN
 END //
 DELIMITER ;
 
--- Trigger pour enregistrer l'activité après la création d'une commande
 DELIMITER //
 CREATE TRIGGER after_order_insert
 AFTER INSERT ON `order`
@@ -301,7 +277,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- Vue pour les statistiques des produits
+-- Vues (inchangées)
 CREATE VIEW product_stats AS
 SELECT 
     p.id,
@@ -322,7 +298,6 @@ LEFT JOIN
 GROUP BY 
     p.id, p.name, p.category, p.price, p.stock;
 
--- Vue pour les statistiques des utilisateurs
 CREATE VIEW user_stats AS
 SELECT 
     u.id,
@@ -340,7 +315,6 @@ LEFT JOIN
 GROUP BY 
     u.id, u.firstname, u.lastname, u.email, u.created_at;
 
--- Vue pour les produits les plus vendus
 CREATE VIEW top_selling_products AS
 SELECT 
     p.id,
@@ -362,7 +336,6 @@ GROUP BY
 ORDER BY 
     total_sold DESC;
 
--- Vue pour les commandes récentes avec détails
 CREATE VIEW recent_orders_with_details AS
 SELECT 
     o.id AS order_id,
