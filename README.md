@@ -178,17 +178,9 @@ Connexion et Creation de la db 'mydb'
 4. Activez CloudTrail pour enregistrer les actions sur l'infrastructure.
 5. Configurez AWS Certificate Manager (ACM) pour les certificats SSL et appliquez-les aux load balancers.
 
-### Étape 7 : Documentation et Présentation
-1. Fournissez une documentation complète incluant des schémas d'architecture et les étapes de déploiement.
-2. Préparez une présentation finale pour démontrer le déploiement et les fonctionnalités.
-
-## Fichiers et Captures d'Écran
-- **Schémas d'architecture** : Diagrammes du VPC, des sous-réseaux, et de l'architecture globale.
-- **Captures d'écran** : Configurations des groupes de sécurité, instances EC2, ALB, RDS, S3, CloudFront, et CloudWatch.
-
 ## Auteur
-- [Votre Nom]
-- Contact : [votre.email@example.com]
+- Dkhili Fares
+- Contact : dkhili.fares2002@gmail.com
 
 ## Date
-[Date de réalisation du projet]
+mai 2025
